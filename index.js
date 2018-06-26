@@ -61,6 +61,10 @@ module.exports = class SocketIO {
       for (const key in messages) {
         if (key === 'open' || key === 'close') continue;
         socket.on(key, (data, fn) => {
+          if (key === 'join') {
+            console.info('join room:', data.room);
+              socket.join(data.room);
+          }
           this.mockRequst(messages[key], data, fn, socket);
         });
       }
@@ -85,6 +89,25 @@ module.exports = class SocketIO {
     socket.emit(event, data);
     socket.broadcast.emit(event, data);
   }
+    /**
+     * emit an event
+     * @param {String} event
+     * @param {Mixed} data
+     * @param {Object} socket
+     */
+    toroom(room, event, data, socket) {
+        socket.to(room).emit(event, data);
+    }
+    /**
+     * emit an event
+     * @param {String} event
+     * @param {Mixed} data
+     * @param {Object} socket
+     */
+    joinroom(room, event, data, socket) {
+      console.info('socket-io: ', room);
+        socket.join(room);
+    }
   /**
    * run
    */
