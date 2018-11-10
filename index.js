@@ -96,6 +96,8 @@ module.exports = class SocketIO {
      * @param {Object} socket
      */
     toroom(room, event, data, socket) {
+      console.info('to room socket: ', socket.rooms);
+        console.info('to room: ', room);
         socket.to(room).emit(event, data);
     }
     /**
@@ -105,8 +107,15 @@ module.exports = class SocketIO {
      * @param {Object} socket
      */
     joinroom(room, event, data, socket) {
+        console.info('join room socket: ', socket.rooms);
       console.info('socket-io: ', room);
         socket.join(room);
+    }
+
+    leaveroom(room, event, data, socket) {
+        console.info('leave room socket: ', socket.rooms);
+        console.info('leave socket-io: ', room);
+        socket.leave(room);
     }
   /**
    * run
